@@ -1,27 +1,50 @@
 setwd("C:\\Users\\Lenovo\\Desktop\\IT24610819")
 
-#Q1
+data <- read.table("Exercise - LaptopsWeights.txt", header = TRUE)
+fix(data)
+attach(data)
 
-#Random variable x follows a uniform distribution with a=0 and b=40
+colnames(data) <- c("Weight")
 
-#Probability that the train arrives between 8:10 a.m. and 8:25 a.m :
-punif(25,min = 0, max = 40, lower.tail = TRUE) -punif(10,min = 0, max = 40, lower.tail = TRUE)
+population <- data$Weight
+popmn <- mean(population)
+popvar <- var(population)
+popsd <- sqrt(popvar)
 
-#Q2
+print(paste("Population Mean:", popmn))
+print(paste("Population SD:", popsd))
 
-#Random variable x has exponential distribution with lambda=0.34
+samples <- c()
+n <- c()
 
-#Probabilty that an update will take at most 2 hours :
-pexp(2,rate = 0.334,lower.tail = TRUE)
+for (i in 1:25){
+  s <- sample(population, 6, replace = TRUE)
+  samples <- cbind(samples, s)
+  n <- c(n, paste('s',i))
+}
 
-#Q3
+colnames(samples) = n
 
-#Random variable x has normal distribution with mean=100 and standard deviation=15
+s.means <- apply(samples, 2, mean)
+s.vars <- apply(samples, 2, var)
+s.sd <- sqrt(s.vars)
 
-#(i).Probability that a randomly selected person has an IQ above 130 :
-1-pnorm(130,mean = 100, sd=15, lower.tail = TRUE)
+print(paste("Sample Mean:", s.means))
+print(paste("Sample SD:", s.sd))
 
-#(ii).IQ Score represents the 95th percentile :
-qnorm(0.95,mean = 100, sd=15,lower.tail = TRUE)
+samplemean <- mean(s.means)
+samplevars <- var(s.means)
+samplesd <- sqrt(samplevars)
 
+popmn
+samplemean
+
+truevar = popsd / 6
+samplesd
+
+truevar = popvar/6
+samplevars
+
+truesd<-sqrt(truevar)
+samplesd
 
